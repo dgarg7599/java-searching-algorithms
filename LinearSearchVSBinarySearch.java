@@ -6,24 +6,24 @@ public class LinearSearchVSBinarySearch {
     public static int findFirstMissingPositive(int[] nums) {
         int n = nums.length;
 
-        // Place each number in its correct position if possible
-        for (int i = 0; i < n; i++) {
-            while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
-                // Swap nums[i] with its correct position
-                int temp = nums[nums[i] - 1];
-                nums[nums[i] - 1] = nums[i];
-                nums[i] = temp;
+        // Create a boolean array to track the presence of integers from 1 to n
+        boolean[] present = new boolean[n + 1];
+
+        // Mark the present numbers in the boolean array
+        for (int num : nums) {
+            if (num > 0 && num <= n) {
+                present[num] = true; // Mark that number as present
             }
         }
 
-        // Find the first missing positive number
-        for (int i = 0; i < n; i++) {
-            if (nums[i] != i + 1) {
-                return i + 1; // First missing positive number
+        // Find the first number which is not marked in the array
+        for (int i = 1; i <= n; i++) {
+            if (!present[i]) {
+                return i; // Return the first missing positive integer
             }
         }
 
-        return n + 1; // If all are in place, return the next positive number
+        return n + 1; // If all numbers from 1 to n are present, return n + 1
     }
 
     // Method to perform Binary Search for a target number
